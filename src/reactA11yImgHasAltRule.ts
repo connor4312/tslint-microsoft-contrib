@@ -15,18 +15,13 @@ const ALT_STRING: string = 'alt';
 
 export function getFailureStringNoAlt(tagName: string): string {
     return `<${tagName}> elements must have an non-empty alt attribute or \
-use empty alt attribute and role='presentation' for presentational images. \
+use empty alt attribute as well as role='presentation' for decorative/presentational images. \
 A reference for the presentation role can be found at https://www.w3.org/TR/wai-aria/roles#presentation.`;
 }
 
 export function getFailureStringEmptyAltAndNotPresentationRole(tagName: string): string {
     return `The value of alt attribute in <${tagName}> tag is empty and role value is not presentation. \
 Add more details in alt attribute or specify role attribute to equal 'presentation' when 'alt' attribute is empty.`;
-}
-
-export function getFailureStringNonEmptyAltAndPresentationRole(tagName: string): string {
-    return `The value of alt attribute in <${tagName}> tag is non-empty and role value is presentation. \
-Remove role='presentation' or specify 'alt' attributeto be empty when role attributes equals 'presentation'.`;
 }
 
 /**
@@ -101,13 +96,7 @@ class ImgHasAltWalker extends Lint.RuleWalker {
             const isPresentationRole: boolean = !!roleAttributeValue.toLowerCase().match(/\bpresentation\b/);
             const isEmptyAlt: boolean = isEmpty(altAttribute) || getStringLiteral(altAttribute) === '';
 
-            if (!isEmptyAlt && isPresentationRole) { // <img alt='altValue' role='presentation' />
-                this.addFailure(this.createFailure(
-                    node.getStart(),
-                    node.getWidth(),
-                    getFailureStringNonEmptyAltAndPresentationRole(tagName)
-                ));
-            } else if (isEmptyAlt && !isPresentationRole) { // <img alt='' />
+            if (isEmptyAlt && !isPresentationRole) { // <img alt='' />
                 this.addFailure(this.createFailure(
                     node.getStart(),
                     node.getWidth(),

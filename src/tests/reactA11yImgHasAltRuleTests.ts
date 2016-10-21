@@ -1,7 +1,6 @@
 import { TestHelper } from './TestHelper';
 import {
   getFailureStringNoAlt,
-  getFailureStringNonEmptyAltAndPresentationRole,
   getFailureStringEmptyAltAndNotPresentationRole
 } from '../reactA11yImgHasAltRule';
 
@@ -37,6 +36,11 @@ describe('reactA11yImgHasAlt', () => {
 
       it('when the img element has non-empty alt value and not presentation role', () => {
         const fileName: string = fileDirectory + 'ImgElementHasNonEmptyAltValueAndNotPresentationRole.tsx';
+        TestHelper.assertNoViolation(ruleName, fileName);
+      });
+
+      it('when the img element has non-empty alt value and presentation role', () => {
+        const fileName: string = fileDirectory + 'ImgElementHasNonEmptyAltValueAndPresentationRole.tsx';
         TestHelper.assertNoViolation(ruleName, fileName);
       });
     });
@@ -101,41 +105,6 @@ describe('reactA11yImgHasAlt', () => {
           ]
         );
       });
-
-      it('when the img element has non-empty alt value and presentation role', () => {
-        const fileName: string = fileDirectory + 'ImgElementHasNonEmptyAltValueAndPresentationRole.tsx';
-
-        TestHelper.assertViolations(
-          ruleName,
-          fileName,
-          [
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 5 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 6 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 7 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 8 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
-            }
-          ]
-        );
-      });
     });
   });
 
@@ -195,54 +164,6 @@ describe('reactA11yImgHasAlt', () => {
               ruleName: ruleName,
               startPosition: { character: 11, line: 7 },
               failure: getFailureStringNoAlt('img')
-            }
-          ]
-        );
-      });
-
-      it('when custom element or img has non-empty alt value and presentation role', () => {
-        const fileName: string = fileDirectory + 'CustomElementHasNonEmptyAltValueAndPresentationRole.tsx';
-
-        TestHelper.assertViolationsWithOptions(
-          ruleName,
-          options,
-          fileName,
-          [
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 6 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('Picture')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 7 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('Picture')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 8 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('Picture')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 9 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 10 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
-            },
-            {
-              name: fileName,
-              ruleName: ruleName,
-              startPosition: { character: 11, line: 11 },
-              failure: getFailureStringNonEmptyAltAndPresentationRole('img')
             }
           ]
         );
